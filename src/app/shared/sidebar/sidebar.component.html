@@ -4,9 +4,9 @@
     </h3>
     
     <div class="list-group list-reset">
-        <a href="#"
+        <a *ngFor="let elemento of historial" href="#"
             class="list-group-item list-group-item-action">
-            Dashboard
+            {{elemento}}
         </a>
     </div>
 </div>

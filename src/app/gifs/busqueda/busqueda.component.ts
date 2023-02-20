@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
 
 @Component({
   selector: 'app-busqueda',
@@ -14,10 +15,15 @@ export class BusquedaComponent {
   //Como ElementRef es de tipo generico hay que especificar, hay que especificar de que tipo es para poder acceder a sus metodos, por ejemplo el .value
   @ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>; 
 
+  //Para usar el servicio tenemos que insertarlo
+  constructor( private gifsService: GifsService ) {}
+
   //ternimoBusqueda solo nos permite acceder a su valor y no podemos modificarlo
   buscar(){ // buscar(terminoBusqueda: string){
     const valor = this.txtBuscar.nativeElement.value;
     console.log(valor);
+    //usamos el servicio para buscar
+    this.gifsService.buscarGifs( valor );
     this.txtBuscar.nativeElement.value = '';
   }
 }
