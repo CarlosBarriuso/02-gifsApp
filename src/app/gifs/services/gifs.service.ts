@@ -16,7 +16,16 @@ export class GifsService {
     return [...this._historial];
   }
 
-  constructor( private http: HttpClient ) {}
+  constructor( private http: HttpClient ) {
+
+    //si localStorage es null que devuelva un array vacio
+    this._historial = JSON.parse(localStorage.getItem('historial')!) || []
+    
+    /*if( localStorage.getItem('historial') ) {
+      //Como _historial es un array y el locaStorage puede devolver null hay que usar !
+      this._historial = JSON.parse( localStorage.getItem('historial')! );
+    }*/
+  }
 
   //query es el string que vamos a recibir y que usaremos para buscar
   buscarGifs(query: string) {
@@ -32,6 +41,8 @@ export class GifsService {
       //Para estraer solo los diez últimos
       this._historial = this._historial.splice(0, 10);
       console.log(this._historial);
+      //Almacenamiento en el LocalStorage
+      localStorage.setItem('historial', JSON.stringify(this._historial))
     }
 
     this.http.get<SearchGiftResponse>(`https://api.giphy.com/v1/gifs/search?api_key=LD7Vq7UJhVrg9Ktn9Q21afk1ZiWx4HxR&q=${ query }&limit=10`)
