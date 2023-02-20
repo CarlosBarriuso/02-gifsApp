@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 export class GifsService {
   private apiKey: string = 'LD7Vq7UJhVrg9Ktn9Q21afk1ZiWx4HxR';
   private _historial: string[] = []; //
+  // TODO cambiar any por su tipo correspondiente
+  public resultados: any [] = [];
 
   get historial() {
     //Romper con la referencia original y tener un nuevo array, se usa el operador spread ...
@@ -31,9 +33,10 @@ export class GifsService {
       console.log(this._historial);
     }
 
-    this.http.get('https://api.giphy.com/v1/gifs/search?api_key=LD7Vq7UJhVrg9Ktn9Q21afk1ZiWx4HxR&q=peugeot 205&limit=10')
+    this.http.get(`https://api.giphy.com/v1/gifs/search?api_key=LD7Vq7UJhVrg9Ktn9Q21afk1ZiWx4HxR&q=${ query }&limit=10`)
     .subscribe( (resp: any ) => {
       console.log( resp.data );
+      this.resultados = resp.data;
     });
   }
 
